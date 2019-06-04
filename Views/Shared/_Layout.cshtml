@@ -1,0 +1,249 @@
+﻿<!doctype html>
+@using PagedList
+@using PagedList.Mvc
+
+<html class="no-js NoBox" lang="en">
+<head>
+    <!-- title -->
+    <title>Sailing the Cs</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+    <meta name="author" content="Drew Taylor">
+    <!-- favicon -->
+    <link rel="apple-touch-icon" href="~/images/DrewImages/Logo comp_32x32_00000.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/apple-touch-icon-114x114.png">
+    <!-- animation -->
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <!-- bootstrap -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- et line icon -->
+    <link href="~/Content/et-line-icons.css" rel="stylesheet" />
+    <!-- font-awesome icon -->
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <!-- themify icon -->
+    <link href="~/Content/themify-icons.css" rel="stylesheet" />
+    <!-- swiper carousel -->
+    <link href="~/Content/swiper.min.css" rel="stylesheet" />
+    <!-- justified gallery  -->
+    <link href="~/Content/justified-gallery.min.css" rel="stylesheet" />
+    <!-- magnific popup -->
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" />
+    <!-- revolution slider -->
+    <link href="~/Content/settings.css" rel="stylesheet" />
+    <link href="~/Content/layers.css" rel="stylesheet" />
+    <link href="~/Content/navigation.css" rel="stylesheet" />
+    <!-- bootsnav -->
+    <link href="~/Content/bootsnav.css" rel="stylesheet" />
+    <!-- style -->
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <!-- responsive css -->
+    <link href="~/Content/responsive.css" rel="stylesheet" />
+    <!--paged list-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css">
+    <!--Drew Custom CSS-->
+    <link href="~/Content/DrewCustom.css" rel="stylesheet" />
+    <!--[if IE]>
+        <script src="js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- start header -->
+    <header>
+        <!-- start navigation -->
+        <nav class="navbar navbar-default bootsnav navbar-top header-light background-transparent nav-box-width white-link navbar-expand-lg">
+            <div class="container-fluid nav-header-container">
+                <!-- start logo -->
+                <div>
+                    <a href="http://dt-portfolio.azurewebsites.net" title="DT Portfolio" class="logo">
+                        <img src="~/images/DrewImages/Logo comp_90x90 _alpha.png" class="logo-dark" alt="DT Portfolio"><img src="~/images/DrewImages/Logo comp_90x90 _alpha.png" alt="DT Portfolio" class="logo-light default">
+                    </a>
+                </div>
+                <!-- end logo -->
+                <div class="col accordion-menu pr-0 pr-md-3">
+                    <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbar-collapse-toggle-1">
+                        <span class="sr-only">toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-collapse collapse justify-content-end" id="navbar-collapse-toggle-1">
+                        <ul id="accordion" class="nav navbar-nav no-margin alt-font text-normal" data-in="fadeIn" data-out="fadeOut">
+                            <!-- start menu item -->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    @using (Html.BeginForm("AdminIndex", "BlogPosts", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-link LogOffCustom">ADMIN INDEX</button>
+                                    }
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    @using (Html.BeginForm("Index", "Comments", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-link LogOffCustom">COMMENTS</button>
+                                    }
+                                </li>
+                            }
+                            else if (User.IsInRole("Moderator"))
+                            {
+                                <li>
+                                    @using (Html.BeginForm("Index", "Comments", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-link LogOffCustom">COMMENTS</button>
+                                    }
+                                </li>
+                            }
+
+                            <li>
+                                @Html.ActionLink("Home", "Index", "BlogPosts")
+                            </li>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-link LogOffCustom">LOG OFF</button>
+                                    }
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @Html.ActionLink("LOG IN", "Login", "Account")
+                                </li>
+                            }
+
+                            <li>
+                                @Html.ActionLink("REGISTER", "Register", "Account")
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("CONTACT", "Contact", "Home")
+                            </li>
+                            <!-- end menu item -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto pr-0">
+                    <div class="header-searchbar">
+                        <a href="#search-header" class="header-search-form"><i class="fas fa-search search-button"></i></a>
+                        <!-- search input-->
+                        <div id="search-header" class="mfp-hide">
+                            @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+                            {
+                                <div class="search-form position-relative">
+                                    <button type="submit" class="fas fa-search close-search search-button"></button>
+                                    <input id="searchStr" name="searchStr" type="text" class="search-input" placeholder="Enter your keywords..." autocomplete="off">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- end navigation -->
+    </header>
+    <!-- end header -->
+    @RenderBody()
+    <!-- start footer -->
+    <footer class="footer-classic-dark bg-extra-dark-gray">
+        <div class="bg-dark-footer padding-50px-tb sm-padding-30px-tb">
+            <div class="container">
+                <div class="row align-items-center">
+                    <!-- start copyright -->
+                    <div class="col-lg-12 col-md-12 text-small text-center alt-font sm-margin-15px-bottom">
+                        &COPY; 2019 Drew Taylor &nbsp;
+                        <img class="footer-logo" src="~/images/DrewImages/Logo comp_90x90 _00000.png" alt="DT">
+                    </div>
+                    <!-- end copyright -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+    <!-- start scroll to top -->
+    <a class="scroll-top-arrow" href="javascript:void(0);"><i class="ti-arrow-up"></i></a>
+    <!-- end scroll to top  -->
+    <!-- javascript libraries -->
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+    <script src="~/Scripts/jquery.easing.1.3.js"></script>
+    <script src="~/Scripts/skrollr.min.js"></script>
+    <script src="~/Scripts/smooth-scroll.js"></script>
+    <script src="~/Scripts/jquery.appear.js"></script>
+    <!-- menu navigation -->
+    <script src="~/Scripts/bootsnav.js"></script>
+    <script src="~/Scripts/jquery.nav.js"></script>
+    <!-- animation -->
+    <script src="~/Scripts/wow.min.js"></script>
+    <!-- page scroll -->
+    <script src="~/Scripts/page-scroll.js"></script>
+    <!-- swiper carousel -->
+    <script src="~/Scripts/swiper.min.js"></script>
+    <!-- counter -->
+    <script src="~/Scripts/jquery.count-to.js"></script>
+    <!-- parallax -->
+    <script src="~/Scripts/jquery.stellar.js"></script>
+    <!-- magnific popup -->
+    <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
+    <!-- portfolio with shorting tab -->
+    <script src="~/Scripts/isotope.pkgd.min.js"></script>
+    <!-- images loaded -->
+    <script src="~/Scripts/imagesloaded.pkgd.min.js"></script>
+    <!-- pull menu -->
+    <script src="~/Scripts/classie.js"></script>
+    <script src="~/Scripts/hamburger-menu.js"></script>
+    <!-- counter  -->
+    <script src="~/Scripts/counter.js"></script>
+    <!-- fit video  -->
+    <script src="~/Scripts/jquery.fitvids.js"></script>
+    <!-- skill bars  -->
+    <script src="~/Scripts/skill.bars.jquery.js"></script>
+    <!-- justified gallery  -->
+    <script src="~/Scripts/justified-gallery.min.js"></script>
+    <!--pie chart-->
+    <script src="~/Scripts/jquery.easypiechart.min.js"></script>
+    <!-- instagram -->
+    <script src="~/Scripts/instafeed.min.js"></script>
+    <!-- retina -->
+    <script src="~/Scripts/retina.min.js"></script>
+    <!-- revolution -->
+    <script src="~/Scripts/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Scripts/jquery.themepunch.revolution.min.js"></script>
+    <!-- revolution slider extensions (load below extensions JS files only on local file systems to make the slider work! The following part can be removed on server for on demand loading) -->
+    <!--<script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>-->
+    <!-- setting -->
+    <script src="~/Scripts/main.js"></script>
+    <!--Tiny MCE-->
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            tinymce.init({
+                selector: '.TinyMceBody'
+            });
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

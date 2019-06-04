@@ -1,0 +1,75 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<Automata_DTaylor_Blog.Models.BlogPost>
+
+<!-- start page title section -->
+<section class="wow fadeIn parallax" data-stellar-background-ratio="0.5" style="background-image: url('../../images/DrewImages/drew_cover3_pirate.jpg');">
+    <div class="opacity-medium bg-extra-dark-gray"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 d-flex flex-column justify-content-center text-center extra-small-screen page-title-large">
+                <!-- start page title -->
+                <h1 class="text-white-2 alt-font font-weight-600 letter-spacing-minus-1 margin-10px-bottom"><span id="DetailTitleCustom">Sailing the Cs</span></h1>
+                <!-- end page title -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end page title section -->
+<!-- start post content section -->
+<section class="wow fadeIn">
+    <div class="container">
+        <div class="row blog-post-style4">
+            <div class="col-12 px-3 p-md-0">
+                <ul class="blog-grid blog-3col gutter-large">
+                    <li class="grid-sizer"></li>
+                    <!-- start post item -->
+                    @foreach (var post in Model)
+                    {
+                        if (post.ThumbUrl != null)
+                        {
+                            <li class="grid-item wow fadeInUp">
+                                <figure>
+                                    <div class="blog-img bg-extra-dark-gray">
+                                        <a href=@Url.Action("Details", "BlogPosts", new { post.Slug })><img src=@post.ThumbUrl alt=""></a>
+                                    </div>
+                                    <figcaption>
+                                        <div class="portfolio-hover-main text-left">
+                                            <div class="blog-hover-box align-bottom">
+                                                <span class="post-author text-extra-small text-medium-gray text-uppercase d-block margin-5px-bottom sm-margin-5px-bottom">@post.Created.DateTime</span>
+                                                <h6 class="alt-font d-block text-white-2 font-weight-600 mb-0"><a href=@Url.Action("Details", "BlogPosts", new { post.Slug }) class="text-white-2 text-deep-pink-hover">@post.Title</a></h6>
+                                                <p class="text-medium-gray margin-10px-top blog-hover-text">@post.Abstract</p>
+                                            </div>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                        }
+                    }
+                    <!-- end post item -->
+                </ul>
+                <!-- start pagination -->
+                <div class="text-center margin-100px-top md-margin-50px-top wow fadeInUp">
+                    <div class="pagination text-small text-uppercase text-extra-dark-gray">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }), PagedListRenderOptions.MinimalWithPageCountText)
+                    </div>
+                </div>
+                
+
+                @*<div class=" text-center margin-100px-top md-margin-50px-top wow fadeInUp">
+                    <div class="pagination text-small text-uppercase text-extra-dark-gray">
+                        <ul class="mx-auto">
+                            <li><a href="#"><i class="fas fa-long-arrow-alt-left margin-5px-right d-none d-md-inline-block"></i> Prev</a></li>
+                            <li class="active"><a href="">1</a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                            <li><a href="#">Next <i class="fas fa-long-arrow-alt-right margin-5px-left d-none d-md-inline-block"></i></a></li>
+                        </ul>
+                    </div>
+                </div>*@
+                <!-- end pagination -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end post content section -->

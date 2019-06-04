@@ -1,0 +1,35 @@
+﻿@font-face {
+    font-family: '1809 Homer W01 Regular';
+    src: url('../fonts/1809 Homer W01 Regular.ttf') format('truetype');
+}
+
+.LogOffCustom {
+    color:white;
+    font-family: "Montserrat";
+    font-size:12px;
+    margin-top:16px;
+}
+
+.LogOffCustom:hover {
+    text-decoration: none;
+    color:#bbbbbb;
+}
+
+#DetailTitleCustom {
+    font-family: '1809 Homer W01 Regular';
+    font-size: 12vw !important; 
+    color: white;
+    line-height:140px;
+}
+
+.NoBox {
+    box-shadow:none !important;
+}
+
+.drewCenter {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
